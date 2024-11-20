@@ -40,27 +40,38 @@ class NotificationsFragment : Fragment() {
 
         dashboardViewModel.improvements.observe(viewLifecycleOwner) { levels ->
             binding.improvementEfficiencyDescription.text =
-                "Efficiency Improvement (Level ${levels["efficiency"]}): Makes the bar easier to fill"
+                "Efficiency Improvement (Level ${levels["efficiency"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("efficiency")) "MAX Level Reached" else "Makes the bar easier to fill"}"
             binding.improvementPassiveDescription.text =
-                "Passive Improvement (Level ${levels["passive"]}): The monkey moves on its own periodically"
+                "Passive Improvement (Level ${levels["passive"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("passive")) "MAX Level Reached" else "The monkey moves on its own periodically"}"
             binding.improvementAfkDescription.text =
-                "AFK Improvement (Level ${levels["afk"]}): Automatically generates bananas while away"
+                "AFK Improvement (Level ${levels["afk"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("afk")) "MAX Level Reached" else "Automatically generates bananas while away"}"
         }
 
-        dashboardViewModel.costs.observe(viewLifecycleOwner) { costs ->
-            binding.buyEfficiency.text = "Buy Efficiency Improvement (${costs["efficiency"]} Bananas)"
-            binding.buyPassive.text = "Buy Passive Improvement (${costs["passive"]} Bananas)"
-            binding.buyAfk.text = "Buy AFK Improvement (${costs["afk"]} Bananas)"
+        dashboardViewModel.improvements.observe(viewLifecycleOwner) { levels ->
+            val maxedEfficiency = dashboardViewModel.isImprovementMaxed("efficiency")
+            val maxedPassive = dashboardViewModel.isImprovementMaxed("passive")
+            val maxedAfk = dashboardViewModel.isImprovementMaxed("afk")
+
+            binding.buyEfficiency.text = if (maxedEfficiency) "MAX" else "Buy Efficiency Improvement (${dashboardViewModel.costs.value?.get("efficiency")} Bananas)"
+            binding.buyPassive.text = if (maxedPassive) "MAX" else "Buy Passive Improvement (${dashboardViewModel.costs.value?.get("passive")} Bananas)"
+            binding.buyAfk.text = if (maxedAfk) "MAX" else "Buy AFK Improvement (${dashboardViewModel.costs.value?.get("afk")} Bananas)"
+
+            binding.buyEfficiency.isEnabled = !maxedEfficiency
+            binding.buyPassive.isEnabled = !maxedPassive
+            binding.buyAfk.isEnabled = !maxedAfk
         }
 
         binding.buyEfficiency.setOnClickListener {
             dashboardViewModel.buyImprovement("efficiency")
+            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
         }
         binding.buyPassive.setOnClickListener {
             dashboardViewModel.buyImprovement("passive")
+            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
         }
         binding.buyAfk.setOnClickListener {
             dashboardViewModel.buyImprovement("afk")
+            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
         }
 
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)

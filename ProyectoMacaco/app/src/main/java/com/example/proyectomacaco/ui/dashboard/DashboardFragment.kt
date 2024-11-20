@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
 import com.example.proyectomacaco.databinding.FragmentDashboardBinding
 import kotlin.math.min
@@ -45,15 +46,12 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-
 
         val bananaCount = loadBananaCount()
         val experience = loadExperience()
@@ -81,10 +79,43 @@ class DashboardFragment : Fragment() {
         binding.monkey.setOnClickListener {
             playMonkeySoundIfNotPlaying()
             toggleMonkeyImage()
+            handleMonkeyFlip()
         }
 
         return root
     }
+
+    private fun handleMonkeyFlip() {
+        if (Random.nextInt(1000) < 1) {
+            showGifWithNewMusic()
+        } else {
+            toggleMonkeyImage()
+        }
+    }
+
+    private fun showGifWithNewMusic() {
+        val gifImageView = binding.monkeyGif
+
+        gifImageView.visibility = View.VISIBLE
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.monkey_flip_gif)
+            .into(gifImageView)
+
+        dashboardViewModel.stopBackgroundMediaPlayer()
+        val mediaPlayer = MediaPlayer.create(requireContext(), R.raw.gif_music)
+        mediaPlayer.start()
+
+        gifImageView.postDelayed({
+            gifImageView.visibility = View.GONE
+
+            dashboardViewModel.setBananaCount((dashboardViewModel.bananaCount.value ?: 0) + 1000)
+
+            dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
+        }, 5000)
+    }
+
 
     private fun playMonkeySoundIfNotPlaying() {
         if (!isPlayingSound) {

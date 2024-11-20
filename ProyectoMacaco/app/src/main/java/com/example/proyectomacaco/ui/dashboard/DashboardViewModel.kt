@@ -28,13 +28,32 @@ class DashboardViewModel : ViewModel() {
         get() = _backgroundMediaPlayer
 
     private val rankThresholds = listOf(
-        0, 10, 20, 40, 70, 100, 150, 210, 280
+        0,
+        50,
+        150,
+        400,
+        1000,
+        2500,
+        6000,
+        15000,
+        40000,
+        100000
     )
 
+
     private val rankTitles = listOf(
-        "Recruit", "Private", "Corporal", "Sergeant", "Lieutenant",
-        "Captain", "Major", "Colonel", "General"
+        "Banana Scout",
+        "Tree Climber",
+        "Coconut Thrower",
+        "Jungle Explorer",
+        "Banana Hoarder",
+        "Primate Warrior",
+        "Chimp Commander",
+        "Ape Overlord",
+        "King of the Jungle",
+        "Monkey Legend"
     )
+
 
     private val _bananasSpent = MutableLiveData<Int>().apply { value = 0 }
     val bananasSpent: LiveData<Int> get() = _bananasSpent
@@ -119,13 +138,25 @@ class DashboardViewModel : ViewModel() {
     }
     val costs: MutableLiveData<MutableMap<String, Int>> get() = improvementCosts
 
+    private val maxLevels = mapOf(
+        "efficiency" to 8,
+        "passive" to 8,
+        "afk" to 8
+    )
+
+    fun isImprovementMaxed(type: String): Boolean {
+        return (improvementLevels.value?.get(type) ?: 0) >= (maxLevels[type] ?: Int.MAX_VALUE)
+    }
+
     fun buyImprovement(type: String) {
+        if (isImprovementMaxed(type)) return
+
         val currentBananas = _bananaCount.value ?: 0
         val costs = improvementCosts.value ?: return
         val levels = improvementLevels.value ?: return
 
         val cost = costs[type] ?: return
-        if (currentBananas >= cost && (levels[type] ?: 0) < 8) {
+        if (currentBananas >= cost) {
             _bananaCount.value = currentBananas - cost
             _bananasSpent.value = (_bananasSpent.value ?: 0) + cost
             levels[type] = (levels[type] ?: 0) + 1
@@ -134,6 +165,7 @@ class DashboardViewModel : ViewModel() {
             improvementCosts.value = costs
         }
     }
+
 
 
     fun saveImprovements(sharedPreferences: SharedPreferences) {
@@ -177,4 +209,16 @@ class DashboardViewModel : ViewModel() {
             else -> 0
         }
     }
+
+    private var mediaPlayer: MediaPlayer? = null
+
+    fun buyMediaPlayer(context: Context, soundResource: Int) {
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, soundResource)
+        mediaPlayer?.setOnCompletionListener {
+            it.release()
+        }
+        mediaPlayer?.start()
+    }
+
 }

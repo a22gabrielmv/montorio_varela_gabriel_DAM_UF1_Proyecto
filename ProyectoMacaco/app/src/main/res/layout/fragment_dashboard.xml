@@ -106,4 +106,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background" />
 
+    <ImageView
+        android:id="@+id/monkeyGif"
+        android:layout_width="337dp"
+        android:layout_height="342dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="316dp"
+        android:contentDescription="Monkey Flip"
+        android:visibility="gone"
+        android:src="@drawable/monkey_toast_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
