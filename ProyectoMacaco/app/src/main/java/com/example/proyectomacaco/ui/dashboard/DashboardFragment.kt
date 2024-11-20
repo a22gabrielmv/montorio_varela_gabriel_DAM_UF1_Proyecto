@@ -9,6 +9,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,8 +52,8 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
 
         val bananaCount = loadBananaCount()
         val experience = loadExperience()
@@ -132,16 +134,16 @@ class DashboardFragment : Fragment() {
         val passiveLevel = dashboardViewModel.improvements.value?.get("passive") ?: 0
 
         val interval = when (passiveLevel) {
-            0 -> 5000L
-            1 -> 2000L
-            2 -> 1500L
-            3 -> 1000L
-            4 -> 800L
-            5 -> 500L
-            6 -> 300L
-            7 -> 150L
-            8 -> 50L
-            else -> 5000L
+            0 -> 4000L
+            1 -> 2200L
+            2 -> 1000L
+            3 -> 600L
+            4 -> 300L
+            5 -> 100L
+            6 -> 60L
+            7 -> 35L
+            8 -> 20L
+            else -> 4000L
         }
 
         passiveRunnable?.let { handler.removeCallbacks(it) }
@@ -228,6 +230,7 @@ class DashboardFragment : Fragment() {
 
         sharedPreferences.edit().apply {
             putInt("banana_count", 0)
+            putInt("bananasSpent", 0)
             putInt("experience", 0)
             putInt("bananas_spent", 0)
             putString("rank", "Recruit")
@@ -264,16 +267,16 @@ class DashboardFragment : Fragment() {
         val effectiveAfkMillis = min(timeElapsedInMillis, maxAfkMillis)
 
         val interval = when (passiveLevel) {
-            0 -> 5000L
-            1 -> 2000L
-            2 -> 1500L
-            3 -> 1000L
-            4 -> 800L
-            5 -> 500L
-            6 -> 300L
-            7 -> 150L
-            8 -> 50L
-            else -> 5000L
+            0 -> 4000L
+            1 -> 2200L
+            2 -> 1000L
+            3 -> 600L
+            4 -> 300L
+            5 -> 100L
+            6 -> 60L
+            7 -> 35L
+            8 -> 20L
+            else -> 4000L
         }
 
         val baseIncrement = 20 + (efficiencyLevel * 5)
@@ -281,11 +284,20 @@ class DashboardFragment : Fragment() {
         val bananasGenerated = (passiveMovements * baseIncrement / 105).toInt()
 
         if (bananasGenerated > 0) {
-            Toast.makeText(
-                requireContext(),
-                "Your monkey earned $bananasGenerated bananas while you were away!",
-                Toast.LENGTH_LONG
-            ).show()
+
+            val inflater = layoutInflater
+            val layout = inflater.inflate(R.layout.custom_toast, null)
+
+            val toastText = layout.findViewById<TextView>(R.id.toast_text)
+            toastText.text = "Your monkey earned $bananasGenerated bananas while you were away!"
+
+            val toastIcon = layout.findViewById<ImageView>(R.id.toast_icon)
+
+            val toast = Toast(requireContext())
+            toast.duration = Toast.LENGTH_LONG
+            toast.view = layout
+            toast.show()
+
             dashboardViewModel.setBananaCount(
                 (dashboardViewModel.bananaCount.value ?: 0) + bananasGenerated
             )
