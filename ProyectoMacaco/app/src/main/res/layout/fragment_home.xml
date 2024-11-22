@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Cost: 600 Bananas"
+                android:text="Cost: 200 Bananas"
                 android:textColor="@android:color/darker_gray" />
 
             <Button
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Cost: 200 Bananas"
+                android:text="Cost: 600 Bananas"
                 android:textColor="@android:color/darker_gray" />
 
             <Button
