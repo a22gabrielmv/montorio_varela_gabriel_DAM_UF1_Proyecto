@@ -39,6 +39,8 @@ class DashboardFragment : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
     private var passiveRunnable: Runnable? = null
 
+    private var isMonkeyFlipActive = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -79,43 +81,70 @@ class DashboardFragment : Fragment() {
         binding.monkey.setOnClickListener {
             playMonkeySoundIfNotPlaying()
             toggleMonkeyImage()
-            handleMonkeyFlip()
+            if (Random.nextInt(100) < 1) {
+                isPlayingSound=true
+                showGifWithNewMusic()
+            }
         }
 
         return root
     }
 
-    private fun handleMonkeyFlip() {
-        if (Random.nextInt(1000) < 1) {
-            showGifWithNewMusic()
-        } else {
-            toggleMonkeyImage()
-        }
-    }
-
     private fun showGifWithNewMusic() {
+        if (isMonkeyFlipActive) return
+
+        isMonkeyFlipActive = true
+
         val gifImageView = binding.monkeyGif
 
         gifImageView.visibility = View.VISIBLE
 
         Glide.with(this)
             .asGif()
-            .load(R.drawable.monkey_flip_gif)
+            .load(R.drawable.monkey_flip)
+            .skipMemoryCache(true)
             .into(gifImageView)
 
         dashboardViewModel.stopBackgroundMediaPlayer()
-        val mediaPlayer = MediaPlayer.create(requireContext(), R.raw.gif_music)
-        mediaPlayer.start()
 
-        gifImageView.postDelayed({
-            gifImageView.visibility = View.GONE
+        monkeyMediaPlayer?.release()
+        monkeyMediaPlayer = MediaPlayer.create(requireContext(), R.raw.gif_music)
 
-            dashboardViewModel.setBananaCount((dashboardViewModel.bananaCount.value ?: 0) + 1000)
+        monkeyMediaPlayer?.setOnPreparedListener {
+            it.start()
 
-            dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
-        }, 5000)
+            gifImageView.postDelayed({
+                gifImageView.visibility = View.GONE
+
+                dashboardViewModel.setBananaCount((dashboardViewModel.bananaCount.value ?: 0) + 1000)
+
+                dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
+
+                isMonkeyFlipActive = false
+
+                val inflater = layoutInflater
+                val layout = inflater.inflate(R.layout.custom_toast, null)
+
+                val toastText = layout.findViewById<TextView>(R.id.toast_text)
+                toastText.text = "Monki flip found! You won 1000 bananas"
+
+                val toastIcon = layout.findViewById<ImageView>(R.id.toast_icon)
+
+                val toast = Toast(requireContext())
+                toast.duration = Toast.LENGTH_LONG
+                toast.view = layout
+                toast.show()
+
+            }, 10500)
+        }
+
+        monkeyMediaPlayer?.setOnCompletionListener {
+            it.release()
+            monkeyMediaPlayer = null
+            isPlayingSound = false
+        }
+
     }
-
 
     private fun playMonkeySoundIfNotPlaying() {
         if (!isPlayingSound) {

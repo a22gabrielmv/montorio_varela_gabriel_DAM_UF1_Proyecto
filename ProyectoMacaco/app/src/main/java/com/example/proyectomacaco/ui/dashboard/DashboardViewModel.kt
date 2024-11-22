@@ -148,25 +148,26 @@ class DashboardViewModel : ViewModel() {
         return (improvementLevels.value?.get(type) ?: 0) >= (maxLevels[type] ?: Int.MAX_VALUE)
     }
 
-    fun buyImprovement(type: String) {
-        if (isImprovementMaxed(type)) return
+    fun buyImprovement(type: String): Boolean {
+        if (isImprovementMaxed(type)) return false
 
         val currentBananas = _bananaCount.value ?: 0
-        val costs = improvementCosts.value ?: return
-        val levels = improvementLevels.value ?: return
+        val costs = improvementCosts.value ?: return false
+        val levels = improvementLevels.value ?: return false
 
-        val cost = costs[type] ?: return
-        if (currentBananas >= cost) {
+        val cost = costs[type] ?: return false
+        return if (currentBananas >= cost) {
             _bananaCount.value = currentBananas - cost
             _bananasSpent.value = (_bananasSpent.value ?: 0) + cost
             levels[type] = (levels[type] ?: 0) + 1
             costs[type] = (cost * 1.5).toInt()
             improvementLevels.value = levels
             improvementCosts.value = costs
+            true
+        } else {
+            false
         }
     }
-
-
 
     fun saveImprovements(sharedPreferences: SharedPreferences) {
         val levels = improvementLevels.value ?: return

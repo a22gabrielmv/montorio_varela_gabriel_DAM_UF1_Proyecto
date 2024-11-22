@@ -92,13 +92,12 @@
         app:layout_constraintTop_toBottomOf="@id/text_dashboard" />
 
 
-
     <ImageView
         android:id="@+id/monkey"
         android:layout_width="310dp"
         android:layout_height="325dp"
         android:layout_marginTop="336dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="60dp"
         android:src="@drawable/monkey_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background" />
@@ -108,11 +107,11 @@
         android:layout_width="337dp"
         android:layout_height="342dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="316dp"
         android:contentDescription="Monkey Flip"
+        android:src="@drawable/monkey_flip"
         android:visibility="gone"
-        android:src="@drawable/monkey_toast_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

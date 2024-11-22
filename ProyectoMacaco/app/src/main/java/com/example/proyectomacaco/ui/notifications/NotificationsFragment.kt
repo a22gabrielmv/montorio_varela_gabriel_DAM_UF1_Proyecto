@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ class NotificationsFragment : Fragment() {
     )
 
     private lateinit var sharedPreferences: SharedPreferences
+    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,16 +64,13 @@ class NotificationsFragment : Fragment() {
         }
 
         binding.buyEfficiency.setOnClickListener {
-            dashboardViewModel.buyImprovement("efficiency")
-            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
+            handlePurchase("efficiency", R.raw.buy)
         }
         binding.buyPassive.setOnClickListener {
-            dashboardViewModel.buyImprovement("passive")
-            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
+            handlePurchase("passive", R.raw.buy)
         }
         binding.buyAfk.setOnClickListener {
-            dashboardViewModel.buyImprovement("afk")
-            dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
+            handlePurchase("afk", R.raw.buy)
         }
 
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
@@ -79,11 +78,28 @@ class NotificationsFragment : Fragment() {
         return root
     }
 
-    private fun saveData() {
-        dashboardViewModel.saveImprovements(sharedPreferences)
-        sharedPreferences.edit().apply {
-            putInt("banana_count", dashboardViewModel.bananaCount.value ?: 0)
-            apply()
+    private fun handlePurchase(improvementType: String, soundResId: Int) {
+        if (dashboardViewModel.buyImprovement(improvementType)) {
+            dashboardViewModel.buyMediaPlayer(requireContext(), soundResId)
+        } else {
+            showToast("Not enough bananas!")
+        }
+    }
+
+
+    private fun showToast(message: String) {
+        toast?.cancel()
+
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val toastText = layout.findViewById<TextView>(R.id.toast_text)
+        toastText.text = message
+
+        toast = Toast(requireContext()).apply {
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            show()
         }
     }
 
@@ -102,5 +118,12 @@ class NotificationsFragment : Fragment() {
         super.onResume()
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
     }
-}
 
+    private fun saveData() {
+        dashboardViewModel.saveImprovements(sharedPreferences)
+        sharedPreferences.edit().apply {
+            putInt("banana_count", dashboardViewModel.bananaCount.value ?: 0)
+            apply()
+        }
+    }
+}
