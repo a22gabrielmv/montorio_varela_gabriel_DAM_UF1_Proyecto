@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.proyectomacaco.R
 
 class DashboardViewModel : ViewModel() {
 
@@ -220,6 +221,75 @@ class DashboardViewModel : ViewModel() {
             it.release()
         }
         mediaPlayer?.start()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //FRAGMENTO COSMETICOS
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    data class Monkey(
+        val id: String,
+        val name: String,
+        val imageRes: Int,
+        val cost: Int,
+        var isPurchased: Boolean = false,
+        var isEquipped: Boolean = false
+    )
+
+    private val _cosmetics = MutableLiveData<List<Monkey>>().apply {
+        value = listOf(
+            Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 100, isPurchased = true, isEquipped = true),
+            Monkey("gorilla", "Gorilla", R.drawable.monkey_left, 200),
+            Monkey("orangutan", "Orangutan", R.drawable.monkey_left, 600)
+        )
+    }
+    val cosmetics: LiveData<List<Monkey>> get() = _cosmetics
+
+    fun loadCosmetics(sharedPreferences: SharedPreferences) {
+        val cosmeticsList = cosmetics.value ?: return
+        cosmeticsList.forEach { cosmetic ->
+            cosmetic.isPurchased = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_purchased", false)
+            cosmetic.isEquipped = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_equipped", false)
+        }
+        _bananasSpent.value = sharedPreferences.getInt("bananas_spent", 0)
+        _cosmetics.value = cosmeticsList
+    }
+
+    fun saveCosmetics(sharedPreferences: SharedPreferences) {
+        val editor = sharedPreferences.edit()
+        cosmetics.value?.forEach { cosmetic ->
+            editor.putBoolean("cosmetic_${cosmetic.id}_purchased", cosmetic.isPurchased)
+            editor.putBoolean("cosmetic_${cosmetic.id}_equipped", cosmetic.isEquipped)
+        }
+        editor.putInt("bananas_spent", _bananasSpent.value ?: 0)
+        editor.apply()
+    }
+
+    fun buyCosmetic(type: String): Boolean {
+        val cosmetic = cosmetics.value?.find { it.id == type } ?: return false
+
+        if (!cosmetic.isPurchased) {
+            val currentBananas = _bananaCount.value ?: 0
+            if (currentBananas >= cosmetic.cost) {
+                _bananaCount.value = currentBananas - cosmetic.cost
+                _bananasSpent.value = (_bananasSpent.value ?: 0) + cosmetic.cost
+                cosmetic.isPurchased = true
+
+                _cosmetics.value = _cosmetics.value?.map { if (it.id == type) cosmetic else it }
+                return true
+            }
+        }
+        return false
+    }
+
+    fun equipCosmetic(id: String) {
+        val monkeyList = _cosmetics.value?.toMutableList() ?: return
+
+        monkeyList.forEach { it.isEquipped = false }
+
+        monkeyList.find { it.id == id }?.isEquipped = true
+
+        _cosmetics.value = monkeyList
     }
 
 }
