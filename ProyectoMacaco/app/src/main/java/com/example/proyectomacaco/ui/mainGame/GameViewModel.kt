@@ -1,16 +1,14 @@
-package com.example.proyectomacaco.ui.dashboard
+package com.example.proyectomacaco.ui.mainGame
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.proyectomacaco.R
 
-class DashboardViewModel : ViewModel() {
+class GameViewModel : ViewModel() {
 
     private val _bananaCount = MutableLiveData<Int>().apply { value = 0 }
     val bananaCount: LiveData<Int> get() = _bananaCount

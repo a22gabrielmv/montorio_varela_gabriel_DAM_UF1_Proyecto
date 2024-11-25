@@ -1,4 +1,4 @@
-package com.example.proyectomacaco.ui.notifications
+package com.example.proyectomacaco.ui.upgradeStore
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,16 +10,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
-import com.example.proyectomacaco.databinding.FragmentNotificationsBinding
-import com.example.proyectomacaco.ui.dashboard.DashboardViewModel
+import com.example.proyectomacaco.databinding.FragmentUpgradesBinding
+import com.example.proyectomacaco.ui.mainGame.GameViewModel
 
-class NotificationsFragment : Fragment() {
+class UpgradesFragment : Fragment() {
 
-    private lateinit var binding: FragmentNotificationsBinding
-    private val dashboardViewModel: DashboardViewModel by viewModels(
+    private lateinit var binding: FragmentUpgradesBinding
+    private val gameViewModel: GameViewModel by viewModels(
         ownerProducer = { requireActivity() }
     )
 
@@ -31,33 +30,33 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        binding = FragmentUpgradesBinding.inflate(inflater, container, false)
         val root = binding.root
 
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        dashboardViewModel.loadImprovements(sharedPreferences)
+        gameViewModel.loadImprovements(sharedPreferences)
 
-        dashboardViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
+        gameViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
             binding.bananaCounter.text = "Bananas: $count"
         }
 
-        dashboardViewModel.improvements.observe(viewLifecycleOwner) { levels ->
+        gameViewModel.improvements.observe(viewLifecycleOwner) { levels ->
             binding.improvementEfficiencyDescription.text =
-                "Efficiency Improvement (Level ${levels["efficiency"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("efficiency")) "MAX Level Reached" else "Makes the bar easier to fill"}"
+                "Efficiency Improvement (Level ${levels["efficiency"] ?: 0}): ${if (gameViewModel.isImprovementMaxed("efficiency")) "MAX Level Reached" else "Makes the bar easier to fill"}"
             binding.improvementPassiveDescription.text =
-                "Passive Improvement (Level ${levels["passive"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("passive")) "MAX Level Reached" else "The monkey moves on its own periodically"}"
+                "Passive Improvement (Level ${levels["passive"] ?: 0}): ${if (gameViewModel.isImprovementMaxed("passive")) "MAX Level Reached" else "The monkey moves on its own periodically"}"
             binding.improvementAfkDescription.text =
-                "AFK Improvement (Level ${levels["afk"] ?: 0}): ${if (dashboardViewModel.isImprovementMaxed("afk")) "MAX Level Reached" else "Automatically generates bananas while away"}"
+                "AFK Improvement (Level ${levels["afk"] ?: 0}): ${if (gameViewModel.isImprovementMaxed("afk")) "MAX Level Reached" else "Automatically generates bananas while away"}"
         }
 
-        dashboardViewModel.improvements.observe(viewLifecycleOwner) { levels ->
-            val maxedEfficiency = dashboardViewModel.isImprovementMaxed("efficiency")
-            val maxedPassive = dashboardViewModel.isImprovementMaxed("passive")
-            val maxedAfk = dashboardViewModel.isImprovementMaxed("afk")
+        gameViewModel.improvements.observe(viewLifecycleOwner) { levels ->
+            val maxedEfficiency = gameViewModel.isImprovementMaxed("efficiency")
+            val maxedPassive = gameViewModel.isImprovementMaxed("passive")
+            val maxedAfk = gameViewModel.isImprovementMaxed("afk")
 
-            binding.buyEfficiency.text = if (maxedEfficiency) "MAX" else "Buy Efficiency Improvement (${dashboardViewModel.costs.value?.get("efficiency")} Bananas)"
-            binding.buyPassive.text = if (maxedPassive) "MAX" else "Buy Passive Improvement (${dashboardViewModel.costs.value?.get("passive")} Bananas)"
-            binding.buyAfk.text = if (maxedAfk) "MAX" else "Buy AFK Improvement (${dashboardViewModel.costs.value?.get("afk")} Bananas)"
+            binding.buyEfficiency.text = if (maxedEfficiency) "MAX" else "Buy Efficiency Improvement (${gameViewModel.costs.value?.get("efficiency")} Bananas)"
+            binding.buyPassive.text = if (maxedPassive) "MAX" else "Buy Passive Improvement (${gameViewModel.costs.value?.get("passive")} Bananas)"
+            binding.buyAfk.text = if (maxedAfk) "MAX" else "Buy AFK Improvement (${gameViewModel.costs.value?.get("afk")} Bananas)"
 
             binding.buyEfficiency.isEnabled = !maxedEfficiency
             binding.buyPassive.isEnabled = !maxedPassive
@@ -74,7 +73,7 @@ class NotificationsFragment : Fragment() {
             handlePurchase("afk", R.raw.buy)
         }
 
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
 
         Glide.with(this)
             .asGif()
@@ -85,8 +84,8 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun handlePurchase(improvementType: String, soundResId: Int) {
-        if (dashboardViewModel.buyImprovement(improvementType)) {
-            dashboardViewModel.buyMediaPlayer(requireContext(), soundResId)
+        if (gameViewModel.buyImprovement(improvementType)) {
+            gameViewModel.buyMediaPlayer(requireContext(), soundResId)
         } else {
             showToast("Not enough bananas!")
         }
@@ -112,23 +111,23 @@ class NotificationsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         saveData()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
     }
 
     override fun onStop() {
         super.onStop()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
     }
 
     override fun onResume() {
         super.onResume()
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
     }
 
     private fun saveData() {
-        dashboardViewModel.saveImprovements(sharedPreferences)
+        gameViewModel.saveImprovements(sharedPreferences)
         sharedPreferences.edit().apply {
-            putInt("banana_count", dashboardViewModel.bananaCount.value ?: 0)
+            putInt("banana_count", gameViewModel.bananaCount.value ?: 0)
             apply()
         }
     }

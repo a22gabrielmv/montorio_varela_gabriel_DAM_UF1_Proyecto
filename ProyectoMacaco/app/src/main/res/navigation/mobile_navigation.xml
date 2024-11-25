@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_dashboard">
+    app:startDestination="@+id/navigation_game">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.proyectomacaco.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_cosmetic"
+        android:name="com.example.proyectomacaco.ui.cosmeticStore.CosmeticFragment"
+        android:label="@string/title_cosmetics"
+        tools:layout="@layout/fragment_cosmetic" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.proyectomacaco.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_game"
+        android:name="com.example.proyectomacaco.ui.mainGame.GameFragment"
+        android:label="@string/title_game"
+        tools:layout="@layout/fragment_game" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.proyectomacaco.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_upgrades"
+        android:name="com.example.proyectomacaco.ui.upgradeStore.UpgradesFragment"
+        android:label="@string/title_upgrades"
+        tools:layout="@layout/fragment_upgrades" />
 </navigation>

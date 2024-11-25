@@ -1,10 +1,8 @@
-package com.example.proyectomacaco.ui.home
+package com.example.proyectomacaco.ui.cosmeticStore
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,18 +10,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
-import com.example.proyectomacaco.databinding.FragmentHomeBinding
-import com.example.proyectomacaco.databinding.FragmentNotificationsBinding
-import com.example.proyectomacaco.ui.dashboard.DashboardViewModel
+import com.example.proyectomacaco.databinding.FragmentCosmeticBinding
+import com.example.proyectomacaco.ui.mainGame.GameViewModel
 
-class HomeFragment : Fragment() {
+class CosmeticFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentCosmeticBinding
 
-    private val dashboardViewModel: DashboardViewModel by viewModels(
+    private val gameViewModel: GameViewModel by viewModels(
         ownerProducer = { requireActivity() }
     )
 
@@ -35,22 +31,22 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentCosmeticBinding.inflate(inflater, container, false)
         val root = binding.root
 
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
-        dashboardViewModel.loadCosmetics(sharedPreferences)
+        gameViewModel.loadCosmetics(sharedPreferences)
 
-        dashboardViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
+        gameViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
             binding.bananaCounter.text = "Bananas: $count"
         }
 
-        dashboardViewModel.cosmetics.observe(viewLifecycleOwner) { cosmetics ->
+        gameViewModel.cosmetics.observe(viewLifecycleOwner) { cosmetics ->
             updateCosmeticUI(cosmetics)
         }
 
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
 
         Glide.with(this)
             .asGif()
@@ -60,7 +56,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    private fun updateCosmeticUI(cosmetics: List<DashboardViewModel.Monkey>) {
+    private fun updateCosmeticUI(cosmetics: List<GameViewModel.Monkey>) {
         cosmetics.forEach { monkey ->
             when (monkey.id) {
                 "chimp" -> {
@@ -123,21 +119,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun handleCosmeticAction(monkey: DashboardViewModel.Monkey) {
+    private fun handleCosmeticAction(monkey: GameViewModel.Monkey) {
         if (!monkey.isPurchased) {
-            if (dashboardViewModel.buyCosmetic(monkey.id)) {
-                dashboardViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
+            if (gameViewModel.buyCosmetic(monkey.id)) {
+                gameViewModel.buyMediaPlayer(requireContext(), R.raw.buy)
                 showToast("${monkey.name} purchased!")
             } else {
                 showToast("Not enough bananas!")
             }
         } else {
             if (!monkey.isEquipped) {
-                dashboardViewModel.equipCosmetic(monkey.id)
+                gameViewModel.equipCosmetic(monkey.id)
                 showToast("${monkey.name} equipped!")
             }
         }
-        dashboardViewModel.saveCosmetics(sharedPreferences)
+        gameViewModel.saveCosmetics(sharedPreferences)
     }
 
 
@@ -159,25 +155,25 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
     }
 
     override fun onPause() {
         super.onPause()
         saveData()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
     }
 
     override fun onStop() {
         super.onStop()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
     }
 
     private fun saveData() {
-        dashboardViewModel.saveCosmetics(sharedPreferences)
+        gameViewModel.saveCosmetics(sharedPreferences)
 
         sharedPreferences.edit().apply {
-            putInt("banana_count", dashboardViewModel.bananaCount.value ?: 0)
+            putInt("banana_count", gameViewModel.bananaCount.value ?: 0)
             apply()
         }
     }

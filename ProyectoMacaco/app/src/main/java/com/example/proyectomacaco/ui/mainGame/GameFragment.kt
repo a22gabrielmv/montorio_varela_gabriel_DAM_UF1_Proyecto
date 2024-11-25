@@ -1,4 +1,4 @@
-package com.example.proyectomacaco.ui.dashboard
+package com.example.proyectomacaco.ui.mainGame
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -16,17 +16,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
-import com.example.proyectomacaco.databinding.FragmentDashboardBinding
+import com.example.proyectomacaco.databinding.FragmentGameBinding
 import kotlin.math.min
 import kotlin.random.Random
 
 
-class DashboardFragment : Fragment() {
+class GameFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
 
-    private val dashboardViewModel: DashboardViewModel by viewModels(
+    private val gameViewModel: GameViewModel by viewModels(
         ownerProducer = { requireActivity() }
     )
 
@@ -44,15 +44,15 @@ class DashboardFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        dashboardViewModel.loadImprovements(sharedPreferences)
+        gameViewModel.loadImprovements(sharedPreferences)
 
-        dashboardViewModel.loadCosmetics(sharedPreferences)
+        gameViewModel.loadCosmetics(sharedPreferences)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentGameBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -61,18 +61,18 @@ class DashboardFragment : Fragment() {
 
         val bananaCount = loadBananaCount()
         val experience = loadExperience()
-        dashboardViewModel.setBananaCount(bananaCount)
-        dashboardViewModel.setExperience(experience)
+        gameViewModel.setBananaCount(bananaCount)
+        gameViewModel.setExperience(experience)
 
-        dashboardViewModel.cosmetics.observe(viewLifecycleOwner) { cosmetics ->
+        gameViewModel.cosmetics.observe(viewLifecycleOwner) { cosmetics ->
             val equippedMonkey = cosmetics.find { it.isEquipped }
             equippedMonkey?.let {
                 binding.monkey.setImageResource(it.imageRes)
             }
         }
 
-        dashboardViewModel.experience.observe(viewLifecycleOwner) { exp ->
-            val rankIndex = dashboardViewModel.getRankIndex()
+        gameViewModel.experience.observe(viewLifecycleOwner) { exp ->
+            val rankIndex = gameViewModel.getRankIndex()
 
             val rankImageRes = when (rankIndex) {
                 0 -> R.drawable.rank1
@@ -91,24 +91,24 @@ class DashboardFragment : Fragment() {
             binding.rankImage.setImageResource(rankImageRes)
         }
 
-        dashboardViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
+        gameViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
             binding.bananaCounter.text = "$count"
         }
 
-        dashboardViewModel.experience.observe(viewLifecycleOwner) { exp ->
+        gameViewModel.experience.observe(viewLifecycleOwner) { exp ->
             binding.exp.text = "Exp: $exp"
         }
 
-        dashboardViewModel.rank.observe(viewLifecycleOwner) { rank ->
+        gameViewModel.rank.observe(viewLifecycleOwner) { rank ->
             binding.rank.text = "Rank: $rank"
         }
 
-        dashboardViewModel.expToNextRank.observe(viewLifecycleOwner) { expRemaining ->
+        gameViewModel.expToNextRank.observe(viewLifecycleOwner) { expRemaining ->
             binding.expRemaining.text = "Next rank in: $expRemaining Exp"
         }
 
-        dashboardViewModel.experience.observe(viewLifecycleOwner) {
-            val rankIndex = dashboardViewModel.getRankIndex()
+        gameViewModel.experience.observe(viewLifecycleOwner) {
+            val rankIndex = gameViewModel.getRankIndex()
             val backgroundRes = when {
                 rankIndex <= 5 -> R.drawable.background_jungle
                 rankIndex in 6..8 -> R.drawable.background_island
@@ -118,11 +118,11 @@ class DashboardFragment : Fragment() {
             binding.background.setImageResource(backgroundRes)
         }
 
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
 
         binding.monkey.setOnClickListener {
             playMonkeySoundIfNotPlaying()
-            dashboardViewModel.cosmetics.value?.find { it.isEquipped }
+            gameViewModel.cosmetics.value?.find { it.isEquipped }
                 ?.let { it1 -> toggleMonkeyImage(it1) }
             if (Random.nextInt(100) < 1) {
                 isPlayingSound = true
@@ -153,7 +153,7 @@ class DashboardFragment : Fragment() {
             .skipMemoryCache(true)
             .into(gifImageView)
 
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
 
         monkeyMediaPlayer?.release()
         monkeyMediaPlayer = MediaPlayer.create(requireContext(), R.raw.gif_music)
@@ -164,9 +164,9 @@ class DashboardFragment : Fragment() {
             gifImageView.postDelayed({
                 gifImageView.visibility = View.GONE
 
-                dashboardViewModel.setBananaCount((dashboardViewModel.bananaCount.value ?: 0) + 1000)
+                gameViewModel.setBananaCount((gameViewModel.bananaCount.value ?: 0) + 1000)
 
-                dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
+                gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
 
                 isMonkeyFlipActive = false
 
@@ -217,7 +217,7 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun toggleMonkeyImage(monkey: DashboardViewModel.Monkey) {
+    private fun toggleMonkeyImage(monkey: GameViewModel.Monkey) {
         val leftImageRes = when (monkey.id) {
             "chimp" -> R.drawable.monkey_left
             "gorilla" -> R.drawable.gorilla_left
@@ -241,12 +241,12 @@ class DashboardFragment : Fragment() {
         }
         isMonkeyFacingLeft = !isMonkeyFacingLeft
 
-        val efficiencyLevel = dashboardViewModel.improvements.value?.get("efficiency") ?: 0
+        val efficiencyLevel = gameViewModel.improvements.value?.get("efficiency") ?: 0
         val baseIncrement = 20 + (efficiencyLevel * 5)
         progressValue += baseIncrement
 
         while (progressValue >= 105) {
-            dashboardViewModel.increaseBananaCount()
+            gameViewModel.increaseBananaCount()
             progressValue -= 105
         }
 
@@ -255,7 +255,7 @@ class DashboardFragment : Fragment() {
 
 
     private fun startPassiveImprovement() {
-        val passiveLevel = dashboardViewModel.improvements.value?.get("passive") ?: 0
+        val passiveLevel = gameViewModel.improvements.value?.get("passive") ?: 0
 
         val interval = when (passiveLevel) {
             0 -> 4000L
@@ -275,7 +275,7 @@ class DashboardFragment : Fragment() {
         passiveRunnable = object : Runnable {
             override fun run() {
                 playMonkeySoundIfNotPlaying()
-                dashboardViewModel.cosmetics.value?.find { it.isEquipped }
+                gameViewModel.cosmetics.value?.find { it.isEquipped }
                     ?.let { toggleMonkeyImage(it) }
                 handler.postDelayed(this, interval)
             }
@@ -295,8 +295,8 @@ class DashboardFragment : Fragment() {
 
     private fun saveData() {
         sharedPreferences.edit().apply {
-            putInt("banana_count", dashboardViewModel.bananaCount.value ?: 0)
-            putInt("experience", dashboardViewModel.experience.value ?: 0)
+            putInt("banana_count", gameViewModel.bananaCount.value ?: 0)
+            putInt("experience", gameViewModel.experience.value ?: 0)
             apply()
         }
     }
@@ -311,7 +311,7 @@ class DashboardFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         saveData()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
         isPlayingSound = false
         passiveRunnable?.let { handler.removeCallbacks(it) }
 
@@ -322,13 +322,13 @@ class DashboardFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        dashboardViewModel.stopBackgroundMediaPlayer()
+        gameViewModel.stopBackgroundMediaPlayer()
         passiveRunnable?.let { handler.removeCallbacks(it) }
     }
 
     override fun onResume() {
         super.onResume()
-        dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
+        gameViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
 
         startPassiveImprovement()
         handleAfkGeneration()
@@ -336,24 +336,24 @@ class DashboardFragment : Fragment() {
 
 
     private fun resetGameData() {
-        dashboardViewModel.setBananaCount(0)
-        dashboardViewModel.setExperience(0)
+        gameViewModel.setBananaCount(0)
+        gameViewModel.setExperience(0)
 
         val defaultImprovements = mutableMapOf(
             "efficiency" to 0,
             "passive" to 0,
             "afk" to 0
         )
-        dashboardViewModel.improvements.value = defaultImprovements
+        gameViewModel.improvements.value = defaultImprovements
 
         val defaultCosts = mutableMapOf(
             "efficiency" to 50,
             "passive" to 100,
             "afk" to 200
         )
-        dashboardViewModel.costs.value = defaultCosts
+        gameViewModel.costs.value = defaultCosts
 
-        dashboardViewModel.resetCosmetics()
+        gameViewModel.resetCosmetics()
 
         sharedPreferences.edit().apply {
             putInt("banana_count", 0)
@@ -371,7 +371,7 @@ class DashboardFragment : Fragment() {
                 putInt("improvement_${type}_cost", cost)
             }
 
-            dashboardViewModel.cosmetics.value?.forEach { cosmetic ->
+            gameViewModel.cosmetics.value?.forEach { cosmetic ->
                 putBoolean("cosmetic_${cosmetic.id}_purchased", cosmetic.isPurchased)
                 putBoolean("cosmetic_${cosmetic.id}_equipped", cosmetic.isEquipped)
             }
@@ -391,9 +391,9 @@ class DashboardFragment : Fragment() {
         val currentTime = System.currentTimeMillis()
         val timeElapsedInMillis = currentTime - lastClosedTime
 
-        val afkLevel = dashboardViewModel.improvements.value?.get("afk") ?: 0
-        val efficiencyLevel = dashboardViewModel.improvements.value?.get("efficiency") ?: 0
-        val passiveLevel = dashboardViewModel.improvements.value?.get("passive") ?: 0
+        val afkLevel = gameViewModel.improvements.value?.get("afk") ?: 0
+        val efficiencyLevel = gameViewModel.improvements.value?.get("efficiency") ?: 0
+        val passiveLevel = gameViewModel.improvements.value?.get("passive") ?: 0
 
         val maxAfkMillis = (afkLevel * 3600000L)
         val effectiveAfkMillis = min(timeElapsedInMillis, maxAfkMillis)
@@ -430,8 +430,8 @@ class DashboardFragment : Fragment() {
             toast.view = layout
             toast.show()
 
-            dashboardViewModel.setBananaCount(
-                (dashboardViewModel.bananaCount.value ?: 0) + bananasGenerated
+            gameViewModel.setBananaCount(
+                (gameViewModel.bananaCount.value ?: 0) + bananasGenerated
             )
         }
     }
