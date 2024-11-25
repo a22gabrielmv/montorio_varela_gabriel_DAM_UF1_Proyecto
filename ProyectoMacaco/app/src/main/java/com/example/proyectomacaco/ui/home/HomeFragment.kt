@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
 import com.example.proyectomacaco.databinding.FragmentHomeBinding
 import com.example.proyectomacaco.databinding.FragmentNotificationsBinding
@@ -51,6 +52,11 @@ class HomeFragment : Fragment() {
 
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
 
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.banana_counter)
+            .into(binding.bananaGif)
+
         return root
     }
 
@@ -60,11 +66,11 @@ class HomeFragment : Fragment() {
                 "chimp" -> {
                     binding.chimpImage.setImageResource(R.drawable.monkey_left)
                     binding.chimpName.text = monkey.name
-                    binding.chimpCost.text = "Cost: ${monkey.cost} Bananas"
-                    binding.chimpActionButton.text = if (monkey.isPurchased) {
-                        if (monkey.isEquipped) "Equipped" else "Equip"
-                    } else {
-                        "Buy (${monkey.cost} Bananas)"
+                    binding.chimpCost.text = if (monkey.cost == 0) "Default Monkey" else "Cost: ${monkey.cost} Bananas"
+                    binding.chimpActionButton.text = when {
+                        monkey.isEquipped -> "Equipped"
+                        monkey.isPurchased -> "Equip"
+                        else -> "Buy (${monkey.cost} Bananas)"
                     }
                     binding.chimpActionButton.isEnabled = !monkey.isEquipped
                     binding.chimpActionButton.setOnClickListener {
@@ -72,7 +78,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 "gorilla" -> {
-                    binding.gorillaImage.setImageResource(R.drawable.monkey_left)
+                    binding.gorillaImage.setImageResource(R.drawable.gorilla_left)
                     binding.gorillaName.text = monkey.name
                     binding.gorillaCost.text = "Cost: ${monkey.cost} Bananas"
                     binding.gorillaActionButton.text = if (monkey.isPurchased) {
@@ -86,7 +92,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 "orangutan" -> {
-                    binding.orangutanImage.setImageResource(R.drawable.monkey_left)
+                    binding.orangutanImage.setImageResource(R.drawable.orangutan_left)
                     binding.orangutanName.text = monkey.name
                     binding.orangutanCost.text = "Cost: ${monkey.cost} Bananas"
                     binding.orangutanActionButton.text = if (monkey.isPurchased) {

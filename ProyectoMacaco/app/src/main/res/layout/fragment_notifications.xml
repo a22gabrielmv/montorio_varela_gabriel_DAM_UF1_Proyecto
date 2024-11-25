@@ -11,71 +11,102 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="88dp"
         android:paddingBottom="16dp"
         android:text="Bananas: 0"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.129" />
 
     <TextView
         android:id="@+id/improvement_efficiency_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
         android:paddingBottom="8dp"
         android:text="Efficiency Improvement: Makes the bar easier to fill"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.248" />
 
     <Button
         android:id="@+id/buy_efficiency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="20dp"
         android:text="Buy Efficiency Improvement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/improvement_efficiency_description" />
+        app:layout_constraintTop_toBottomOf="@+id/improvement_efficiency_description"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/improvement_passive_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="Passive Improvement: The monkey moves on its own periodically"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437" />
 
     <Button
         android:id="@+id/buy_passive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="131dp"
+        android:layout_marginTop="20dp"
         android:text="Buy Passive Improvement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buy_efficiency" />
+        app:layout_constraintTop_toBottomOf="@+id/improvement_passive_description" />
 
     <TextView
         android:id="@+id/improvement_afk_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="AFK Improvement: Automatically generates bananas while away"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buy_passive" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
 
     <Button
         android:id="@+id/buy_afk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="20dp"
         android:text="Buy AFK Improvement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/improvement_afk_description" />
+        app:layout_constraintTop_toBottomOf="@+id/improvement_afk_description"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <ImageView
+        android:id="@+id/bananaGif"
+        android:layout_width="54dp"
+        android:layout_height="52dp"
+        android:src="@drawable/banana_counter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
 </androidx.constraintlayout.widget.ConstraintLayout>

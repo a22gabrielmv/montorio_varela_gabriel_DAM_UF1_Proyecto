@@ -12,7 +12,15 @@
         android:padding="16dp"
         >
 
-        <TextView
+    <ImageView
+        android:id="@+id/bananaGif"
+        android:layout_width="54dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/banana_counter" />
+
+    <TextView
             android:id="@+id/bananaCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +75,7 @@
                 android:id="@+id/gorillaImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/monkey_left" />
+                android:src="@drawable/gorilla_left" />
 
             <TextView
                 android:id="@+id/gorillaName"
@@ -102,7 +110,7 @@
                 android:id="@+id/orangutanImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/monkey_left" />
+                android:src="@drawable/orangutan_left" />
 
             <TextView
                 android:id="@+id/orangutanName"

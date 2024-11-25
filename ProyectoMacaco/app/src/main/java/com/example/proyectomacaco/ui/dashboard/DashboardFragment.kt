@@ -45,6 +45,8 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         dashboardViewModel.loadImprovements(sharedPreferences)
+
+        dashboardViewModel.loadCosmetics(sharedPreferences)
     }
 
     override fun onCreateView(
@@ -55,13 +57,42 @@ class DashboardFragment : Fragment() {
 
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
+        //resetGameData()
+
         val bananaCount = loadBananaCount()
         val experience = loadExperience()
         dashboardViewModel.setBananaCount(bananaCount)
         dashboardViewModel.setExperience(experience)
 
+        dashboardViewModel.cosmetics.observe(viewLifecycleOwner) { cosmetics ->
+            val equippedMonkey = cosmetics.find { it.isEquipped }
+            equippedMonkey?.let {
+                binding.monkey.setImageResource(it.imageRes)
+            }
+        }
+
+        dashboardViewModel.experience.observe(viewLifecycleOwner) { exp ->
+            val rankIndex = dashboardViewModel.getRankIndex()
+
+            val rankImageRes = when (rankIndex) {
+                0 -> R.drawable.rank1
+                1 -> R.drawable.rank2
+                2 -> R.drawable.rank3
+                3 -> R.drawable.rank4
+                4 -> R.drawable.rank5
+                5 -> R.drawable.rank6
+                6 -> R.drawable.rank7
+                7 -> R.drawable.rank8
+                8 -> R.drawable.rank9
+                9 -> R.drawable.rank10
+                else -> R.drawable.rank1
+            }
+
+            binding.rankImage.setImageResource(rankImageRes)
+        }
+
         dashboardViewModel.bananaCount.observe(viewLifecycleOwner) { count ->
-            binding.bananaCounter.text = "Bananas: $count"
+            binding.bananaCounter.text = "$count"
         }
 
         dashboardViewModel.experience.observe(viewLifecycleOwner) { exp ->
@@ -73,19 +104,25 @@ class DashboardFragment : Fragment() {
         }
 
         dashboardViewModel.expToNextRank.observe(viewLifecycleOwner) { expRemaining ->
-            binding.expRemaining.text = "Next Rank in: $expRemaining Exp"
+            binding.expRemaining.text = "Next rank in: $expRemaining Exp"
         }
 
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
 
         binding.monkey.setOnClickListener {
             playMonkeySoundIfNotPlaying()
-            toggleMonkeyImage()
+            dashboardViewModel.cosmetics.value?.find { it.isEquipped }
+                ?.let { it1 -> toggleMonkeyImage(it1) }
             if (Random.nextInt(100) < 1) {
-                isPlayingSound=true
+                isPlayingSound = true
                 showGifWithNewMusic()
             }
         }
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.banana_counter)
+            .into(binding.bananaGif)
 
         return root
     }
@@ -126,7 +163,7 @@ class DashboardFragment : Fragment() {
                 val layout = inflater.inflate(R.layout.custom_toast, null)
 
                 val toastText = layout.findViewById<TextView>(R.id.toast_text)
-                toastText.text = "Monki flip found! You won 1000 bananas"
+                toastText.text = "Monki flip found! You won 1000 bananas!"
 
                 val toastIcon = layout.findViewById<ImageView>(R.id.toast_icon)
 
@@ -135,7 +172,7 @@ class DashboardFragment : Fragment() {
                 toast.view = layout
                 toast.show()
 
-            }, 10500)
+            }, 7500)
         }
 
         monkeyMediaPlayer?.setOnCompletionListener {
@@ -169,17 +206,30 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun toggleMonkeyImage() {
+    private fun toggleMonkeyImage(monkey: DashboardViewModel.Monkey) {
+        val leftImageRes = when (monkey.id) {
+            "chimp" -> R.drawable.monkey_left
+            "gorilla" -> R.drawable.gorilla_left
+            "orangutan" -> R.drawable.orangutan_left
+            else -> R.drawable.monkey_left
+        }
+
+        val rightImageRes = when (monkey.id) {
+            "chimp" -> R.drawable.monkey_right
+            "gorilla" -> R.drawable.gorilla_right
+            "orangutan" -> R.drawable.orangutan_right
+            else -> R.drawable.monkey_right
+        }
+
         if (isMonkeyFacingLeft) {
-            binding.monkey.setImageResource(R.drawable.monkey_right)
+            binding.monkey.setImageResource(rightImageRes)
         } else {
-            binding.monkey.setImageResource(R.drawable.monkey_left)
+            binding.monkey.setImageResource(leftImageRes)
         }
         isMonkeyFacingLeft = !isMonkeyFacingLeft
 
         val efficiencyLevel = dashboardViewModel.improvements.value?.get("efficiency") ?: 0
         val baseIncrement = 20 + (efficiencyLevel * 5)
-
         progressValue += baseIncrement
 
         while (progressValue >= 105) {
@@ -189,6 +239,7 @@ class DashboardFragment : Fragment() {
 
         binding.progressBar.progress = progressValue
     }
+
 
     private fun startPassiveImprovement() {
         val passiveLevel = dashboardViewModel.improvements.value?.get("passive") ?: 0
@@ -211,7 +262,8 @@ class DashboardFragment : Fragment() {
         passiveRunnable = object : Runnable {
             override fun run() {
                 playMonkeySoundIfNotPlaying()
-                toggleMonkeyImage()
+                dashboardViewModel.cosmetics.value?.find { it.isEquipped }
+                    ?.let { toggleMonkeyImage(it) }
                 handler.postDelayed(this, interval)
             }
         }
@@ -288,6 +340,8 @@ class DashboardFragment : Fragment() {
         )
         dashboardViewModel.costs.value = defaultCosts
 
+        dashboardViewModel.resetCosmetics()
+
         sharedPreferences.edit().apply {
             putInt("banana_count", 0)
             putInt("bananasSpent", 0)
@@ -302,6 +356,11 @@ class DashboardFragment : Fragment() {
 
             defaultCosts.forEach { (type, cost) ->
                 putInt("improvement_${type}_cost", cost)
+            }
+
+            dashboardViewModel.cosmetics.value?.forEach { cosmetic ->
+                putBoolean("cosmetic_${cosmetic.id}_purchased", cosmetic.isPurchased)
+                putBoolean("cosmetic_${cosmetic.id}_equipped", cosmetic.isEquipped)
             }
 
             apply()

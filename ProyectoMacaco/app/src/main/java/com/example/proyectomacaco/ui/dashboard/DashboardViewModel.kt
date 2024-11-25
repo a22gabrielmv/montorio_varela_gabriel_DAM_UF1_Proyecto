@@ -41,7 +41,6 @@ class DashboardViewModel : ViewModel() {
         100000
     )
 
-
     private val rankTitles = listOf(
         "Banana Scout",
         "Tree Climber",
@@ -55,6 +54,10 @@ class DashboardViewModel : ViewModel() {
         "Monkey Legend"
     )
 
+    fun getRankIndex(): Int {
+        val experience = _experience.value ?: 0
+        return rankThresholds.indexOfLast { experience >= it }
+    }
 
     private val _bananasSpent = MutableLiveData<Int>().apply { value = 0 }
     val bananasSpent: LiveData<Int> get() = _bananasSpent
@@ -238,22 +241,33 @@ class DashboardViewModel : ViewModel() {
 
     private val _cosmetics = MutableLiveData<List<Monkey>>().apply {
         value = listOf(
-            Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 100, isPurchased = true, isEquipped = true),
-            Monkey("gorilla", "Gorilla", R.drawable.monkey_left, 200),
-            Monkey("orangutan", "Orangutan", R.drawable.monkey_left, 600)
+            Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
+            Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
+            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600)
         )
     }
     val cosmetics: LiveData<List<Monkey>> get() = _cosmetics
 
     fun loadCosmetics(sharedPreferences: SharedPreferences) {
-        val cosmeticsList = cosmetics.value ?: return
+        val cosmeticsList = cosmetics.value?.toMutableList() ?: return
+
         cosmeticsList.forEach { cosmetic ->
-            cosmetic.isPurchased = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_purchased", false)
-            cosmetic.isEquipped = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_equipped", false)
+            val isPurchased = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_purchased", false)
+            val isEquipped = sharedPreferences.getBoolean("cosmetic_${cosmetic.id}_equipped", false)
+
+            if (cosmetic.id == "chimp" && !sharedPreferences.contains("cosmetic_chimp_purchased")) {
+                cosmetic.isPurchased = true
+                cosmetic.isEquipped = true
+            } else {
+                cosmetic.isPurchased = isPurchased
+                cosmetic.isEquipped = isEquipped
+            }
         }
+
         _bananasSpent.value = sharedPreferences.getInt("bananas_spent", 0)
         _cosmetics.value = cosmeticsList
     }
+
 
     fun saveCosmetics(sharedPreferences: SharedPreferences) {
         val editor = sharedPreferences.edit()
@@ -292,4 +306,12 @@ class DashboardViewModel : ViewModel() {
         _cosmetics.value = monkeyList
     }
 
+    fun resetCosmetics() {
+        val defaultCosmetics = listOf(
+            Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
+            Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
+            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600)
+        )
+        _cosmetics.value = defaultCosmetics
+    }
 }

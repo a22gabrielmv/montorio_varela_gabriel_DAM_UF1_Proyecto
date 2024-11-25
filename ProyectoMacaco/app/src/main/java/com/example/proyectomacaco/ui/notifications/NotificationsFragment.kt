@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.proyectomacaco.R
 import com.example.proyectomacaco.databinding.FragmentNotificationsBinding
 import com.example.proyectomacaco.ui.dashboard.DashboardViewModel
@@ -74,6 +75,11 @@ class NotificationsFragment : Fragment() {
         }
 
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_store)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.banana_counter)
+            .into(binding.bananaGif)
 
         return root
     }
