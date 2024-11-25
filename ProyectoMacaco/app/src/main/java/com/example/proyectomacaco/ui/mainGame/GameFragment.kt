@@ -107,6 +107,17 @@ class DashboardFragment : Fragment() {
             binding.expRemaining.text = "Next rank in: $expRemaining Exp"
         }
 
+        dashboardViewModel.experience.observe(viewLifecycleOwner) {
+            val rankIndex = dashboardViewModel.getRankIndex()
+            val backgroundRes = when {
+                rankIndex <= 5 -> R.drawable.background_jungle
+                rankIndex in 6..8 -> R.drawable.background_island
+                rankIndex == 9 -> R.drawable.background_space
+                else -> R.drawable.background_jungle
+            }
+            binding.background.setImageResource(backgroundRes)
+        }
+
         dashboardViewModel.initializeMediaPlayer(requireContext(), R.raw.background_main_game)
 
         binding.monkey.setOnClickListener {
@@ -211,6 +222,7 @@ class DashboardFragment : Fragment() {
             "chimp" -> R.drawable.monkey_left
             "gorilla" -> R.drawable.gorilla_left
             "orangutan" -> R.drawable.orangutan_left
+            "macaque" -> R.drawable.macaque_left
             else -> R.drawable.monkey_left
         }
 
@@ -218,6 +230,7 @@ class DashboardFragment : Fragment() {
             "chimp" -> R.drawable.monkey_right
             "gorilla" -> R.drawable.gorilla_right
             "orangutan" -> R.drawable.orangutan_right
+            "macaque" -> R.drawable.macaque_right
             else -> R.drawable.monkey_right
         }
 
@@ -369,7 +382,7 @@ class DashboardFragment : Fragment() {
         progressValue = 0
         binding.progressBar.progress = 0
 
-        Toast.makeText(requireContext(), "Game reset successfully!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Game reset successfully", Toast.LENGTH_SHORT).show()
     }
 
 

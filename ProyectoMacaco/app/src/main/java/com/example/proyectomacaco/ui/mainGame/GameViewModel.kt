@@ -243,7 +243,8 @@ class DashboardViewModel : ViewModel() {
         value = listOf(
             Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
             Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
-            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600)
+            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600),
+            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800)
         )
     }
     val cosmetics: LiveData<List<Monkey>> get() = _cosmetics
@@ -310,8 +311,9 @@ class DashboardViewModel : ViewModel() {
         val defaultCosmetics = listOf(
             Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
             Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
-            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600)
-        )
+            Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600),
+            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800)
+            )
         _cosmetics.value = defaultCosmetics
     }
 }

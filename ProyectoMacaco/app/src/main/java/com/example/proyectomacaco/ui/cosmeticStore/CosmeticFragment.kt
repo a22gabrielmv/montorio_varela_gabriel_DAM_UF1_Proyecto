@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
                 "chimp" -> {
                     binding.chimpImage.setImageResource(R.drawable.monkey_left)
                     binding.chimpName.text = monkey.name
-                    binding.chimpCost.text = if (monkey.cost == 0) "Default Monkey" else "Cost: ${monkey.cost} Bananas"
+                    binding.chimpCost.text = if (monkey.cost == 0) "The Primate Strategist" else "Cost: ${monkey.cost} Bananas"
                     binding.chimpActionButton.text = when {
                         monkey.isEquipped -> "Equipped"
                         monkey.isPurchased -> "Equip"
@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
                 "gorilla" -> {
                     binding.gorillaImage.setImageResource(R.drawable.gorilla_left)
                     binding.gorillaName.text = monkey.name
-                    binding.gorillaCost.text = "Cost: ${monkey.cost} Bananas"
+                    binding.gorillaCost.text = "The Titan of the Jungle"
                     binding.gorillaActionButton.text = if (monkey.isPurchased) {
                         if (monkey.isEquipped) "Equipped" else "Equip"
                     } else {
@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
                 "orangutan" -> {
                     binding.orangutanImage.setImageResource(R.drawable.orangutan_left)
                     binding.orangutanName.text = monkey.name
-                    binding.orangutanCost.text = "Cost: ${monkey.cost} Bananas"
+                    binding.orangutanCost.text = "The Sage of the Canopy"
                     binding.orangutanActionButton.text = if (monkey.isPurchased) {
                         if (monkey.isEquipped) "Equipped" else "Equip"
                     } else {
@@ -102,6 +102,20 @@ class HomeFragment : Fragment() {
                     }
                     binding.orangutanActionButton.isEnabled = !monkey.isEquipped
                     binding.orangutanActionButton.setOnClickListener {
+                        handleCosmeticAction(monkey)
+                    }
+                }
+                "macaque" -> {
+                    binding.macaqueImage.setImageResource(R.drawable.macaque_left)
+                    binding.macaqueName.text = monkey.name
+                    binding.macaqueCost.text = "The Trickster of the Tropics"
+                    binding.macaqueActionButton.text = if (monkey.isPurchased) {
+                        if (monkey.isEquipped) "Equipped" else "Equip"
+                    } else {
+                        "Buy (${monkey.cost} Bananas)"
+                    }
+                    binding.macaqueActionButton.isEnabled = !monkey.isEquipped
+                    binding.macaqueActionButton.setOnClickListener {
                         handleCosmeticAction(monkey)
                     }
                 }

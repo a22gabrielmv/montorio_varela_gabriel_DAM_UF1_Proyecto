@@ -16,7 +16,7 @@
         android:id="@+id/bananaGif"
         android:layout_width="54dp"
         android:layout_height="52dp"
-        android:layout_marginStart="145dp"
+        android:layout_marginStart="140dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/banana_counter" />
 
@@ -33,7 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:paddingTop="10dp"
+            android:gravity="center_horizontal"
+            >
 
             <ImageView
                 android:id="@+id/chimpImage"
@@ -53,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Cost: 100 Bananas"
+                android:text="Primate Strategist"
                 android:textColor="@android:color/darker_gray" />
 
             <Button
@@ -69,7 +72,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:gravity="center_horizontal"
+            >
 
             <ImageView
                 android:id="@+id/gorillaImage"
@@ -89,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Cost: 200 Bananas"
+                android:text="The Titan of the Jungle"
                 android:textColor="@android:color/darker_gray" />
 
             <Button
@@ -104,7 +109,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            >
 
             <ImageView
                 android:id="@+id/orangutanImage"
@@ -124,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Cost: 600 Bananas"
+                android:text="The Sage of the Canopy"
                 android:textColor="@android:color/darker_gray" />
 
             <Button
@@ -135,6 +142,46 @@
                 android:text="Equip" />
         </LinearLayout>
 
+        <!-- Macaque -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/macaqueImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/macaque_left" />
+
+            <TextView
+                android:id="@+id/macaqueName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Macaque" />
+
+            <TextView
+                android:id="@+id/macaqueCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="The Trickster of the Tropics"
+                android:textColor="@android:color/darker_gray" />
+
+            <Button
+                android:id="@+id/macaqueActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Equip" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
     </LinearLayout>
 
 </ScrollView>
