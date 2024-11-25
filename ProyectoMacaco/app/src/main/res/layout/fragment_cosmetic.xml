@@ -1,187 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/black"
+    >
 
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
-
+    <!-- Background Image -->
     <ImageView
-        android:id="@+id/bananaGif"
-        android:layout_width="54dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/banana_counter" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_store"
+        android:contentDescription="Background image" />
 
-    <TextView
-            android:id="@+id/bananaCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Bananas: 0"
-            android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-        <!-- Chimpanzee -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:paddingTop="10dp"
-            android:gravity="center_horizontal"
+            android:padding="16dp"
             >
 
             <ImageView
-                android:id="@+id/chimpImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/monkey_left" />
+                android:id="@+id/bananaGif"
+                android:layout_width="54dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/banana_counter" />
 
             <TextView
-                android:id="@+id/chimpName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Chimpanzee" />
+                    android:id="@+id/bananaCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Bananas: 0"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/chimpCost"
-                android:layout_width="wrap_content"
+            <!-- Chimpanzee -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Primate Strategist"
-                android:textColor="@android:color/darker_gray" />
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingTop="10dp"
+                android:gravity="center_horizontal"
+                >
 
-            <Button
-                android:id="@+id/chimpActionButton"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/chimpImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/monkey_left" />
+
+                <TextView
+                    android:id="@+id/chimpName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:text="Chimpanzee" />
+
+                <TextView
+                    android:id="@+id/chimpCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Primate Strategist"
+                    android:textStyle="italic"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/chimpActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Equip" />
+            </LinearLayout>
+
+            <!-- Gorilla -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Equip" />
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:gravity="center_horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/gorillaImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/gorilla_left" />
+
+                <TextView
+                    android:id="@+id/gorillaName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:text="Gorilla" />
+
+                <TextView
+                    android:id="@+id/gorillaCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"
+                    android:text="The Titan of the Jungle"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/gorillaActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Equip" />
+            </LinearLayout>
+
+            <!-- Orangutan -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/orangutanImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/orangutan_left" />
+
+                <TextView
+                    android:id="@+id/orangutanName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:text="Orangutan" />
+
+                <TextView
+                    android:id="@+id/orangutanCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"
+                    android:text="The Sage of the Canopy"
+                    android:textColor="@color/white"
+                   />
+
+                <Button
+                    android:id="@+id/orangutanActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Equip" />
+            </LinearLayout>
+
+            <!-- Macaque -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/macaqueImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/macaque_left" />
+
+                <TextView
+                    android:id="@+id/macaqueName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:text="Macaque" />
+
+                <TextView
+                    android:id="@+id/macaqueCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"
+                    android:text="The Trickster of the Tropics"
+                    android:textColor="@color/white"
+                    />
+
+                <Button
+                    android:id="@+id/macaqueActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Equip" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
         </LinearLayout>
 
-        <!-- Gorilla -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:gravity="center_horizontal"
-            >
-
-            <ImageView
-                android:id="@+id/gorillaImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/gorilla_left" />
-
-            <TextView
-                android:id="@+id/gorillaName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Gorilla" />
-
-            <TextView
-                android:id="@+id/gorillaCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="The Titan of the Jungle"
-                android:textColor="@android:color/darker_gray" />
-
-            <Button
-                android:id="@+id/gorillaActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Equip" />
-        </LinearLayout>
-
-        <!-- Orangutan -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            >
-
-            <ImageView
-                android:id="@+id/orangutanImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/orangutan_left" />
-
-            <TextView
-                android:id="@+id/orangutanName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Orangutan" />
-
-            <TextView
-                android:id="@+id/orangutanCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="The Sage of the Canopy"
-                android:textColor="@android:color/darker_gray" />
-
-            <Button
-                android:id="@+id/orangutanActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Equip" />
-        </LinearLayout>
-
-        <!-- Macaque -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            >
-
-            <ImageView
-                android:id="@+id/macaqueImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/macaque_left" />
-
-            <TextView
-                android:id="@+id/macaqueName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Macaque" />
-
-            <TextView
-                android:id="@+id/macaqueCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="The Trickster of the Tropics"
-                android:textColor="@android:color/darker_gray" />
-
-            <Button
-                android:id="@+id/macaqueActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Equip" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

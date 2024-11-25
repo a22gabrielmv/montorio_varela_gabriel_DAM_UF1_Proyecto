@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".ui.upgradeStore.UpgradesFragment">
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Background image"
+        android:src="@drawable/background_store"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/bananaCounter"
@@ -14,6 +26,7 @@
         android:paddingBottom="16dp"
         android:text="Bananas: 0"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -27,6 +40,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="Efficiency Improvement: Makes the bar easier to fill"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +67,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="Passive Improvement: The monkey moves on its own periodically"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -78,6 +93,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="AFK Improvement: Automatically generates bananas while away"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
