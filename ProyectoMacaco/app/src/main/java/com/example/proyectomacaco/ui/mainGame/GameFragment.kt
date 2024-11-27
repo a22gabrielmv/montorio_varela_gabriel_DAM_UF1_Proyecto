@@ -104,14 +104,14 @@ class GameFragment : Fragment() {
         }
 
         gameViewModel.expToNextRank.observe(viewLifecycleOwner) { expRemaining ->
-            binding.expRemaining.text = "Next rank in: $expRemaining Exp"
+            binding.expRemaining.text = "Next rank: $expRemaining Exp"
         }
 
         gameViewModel.experience.observe(viewLifecycleOwner) {
             val rankIndex = gameViewModel.getRankIndex()
             val backgroundRes = when {
-                rankIndex <= 5 -> R.drawable.background_jungle
-                rankIndex in 6..8 -> R.drawable.background_island
+                rankIndex <= 4 -> R.drawable.background_jungle
+                rankIndex in 5..8 -> R.drawable.background_island
                 rankIndex == 9 -> R.drawable.background_space
                 else -> R.drawable.background_jungle
             }
@@ -124,7 +124,7 @@ class GameFragment : Fragment() {
             playMonkeySoundIfNotPlaying()
             gameViewModel.cosmetics.value?.find { it.isEquipped }
                 ?.let { it1 -> toggleMonkeyImage(it1) }
-            if (Random.nextInt(100) < 1) {
+            if (Random.nextInt(200) < 1) {
                 isPlayingSound = true
                 showGifWithNewMusic()
             }

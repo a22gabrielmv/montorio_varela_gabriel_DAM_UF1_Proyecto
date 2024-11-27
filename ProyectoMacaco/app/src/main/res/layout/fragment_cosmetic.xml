@@ -50,7 +50,6 @@
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
                 android:paddingTop="10dp"
-                android:gravity="center_horizontal"
                 >
 
                 <ImageView
@@ -64,7 +63,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
+                    android:background="@color/black"
                     android:text="Chimpanzee" />
 
                 <TextView
@@ -72,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:background="@color/teal_700"
                     android:text="Primate Strategist"
                     android:textStyle="italic"
                     android:textColor="@color/white" />
@@ -90,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
-                android:gravity="center_horizontal"
                 >
 
                 <ImageView
@@ -104,7 +104,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
+                    android:background="@color/black"
                     android:text="Gorilla" />
 
                 <TextView
@@ -113,6 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textStyle="italic"
+                    android:background="@color/teal_700"
                     android:text="The Titan of the Jungle"
                     android:textColor="@color/white"/>
 
@@ -129,7 +131,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
                 >
 
                 <ImageView
@@ -143,7 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
+                    android:background="@color/black"
                     android:text="Orangutan" />
 
                 <TextView
@@ -152,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textStyle="italic"
+                    android:background="@color/teal_700"
                     android:text="The Sage of the Canopy"
                     android:textColor="@color/white"
                    />
@@ -169,7 +172,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
                 >
 
                 <ImageView
@@ -183,7 +185,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/yellow"
+                    android:background="@color/black"
                     android:text="Macaque" />
 
                 <TextView
@@ -192,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textStyle="italic"
+                    android:background="@color/teal_700"
                     android:text="The Trickster of the Tropics"
                     android:textColor="@color/white"
                     />
