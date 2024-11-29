@@ -110,8 +110,8 @@ class GameFragment : Fragment() {
         gameViewModel.experience.observe(viewLifecycleOwner) {
             val rankIndex = gameViewModel.getRankIndex()
             val backgroundRes = when {
-                rankIndex <= 4 -> R.drawable.background_jungle
-                rankIndex in 5..8 -> R.drawable.background_island
+                rankIndex <= 5 -> R.drawable.background_jungle
+                rankIndex in 6..8 -> R.drawable.background_island
                 rankIndex == 9 -> R.drawable.background_space
                 else -> R.drawable.background_jungle
             }

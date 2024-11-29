@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -69,6 +70,10 @@ class CosmeticFragment : Fragment() {
                         else -> "Buy (${monkey.cost} Bananas)"
                     }
                     binding.chimpActionButton.isEnabled = !monkey.isEquipped
+
+                    val colorRes = if (monkey.isEquipped) R.color.teal_200 else R.color.button_default
+                    binding.chimpActionButton.setBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+
                     binding.chimpActionButton.setOnClickListener {
                         handleCosmeticAction(monkey)
                     }
@@ -83,6 +88,10 @@ class CosmeticFragment : Fragment() {
                         "Buy (${monkey.cost} Bananas)"
                     }
                     binding.gorillaActionButton.isEnabled = !monkey.isEquipped
+
+                    val colorRes = if (monkey.isEquipped) R.color.teal_200 else R.color.button_default
+                    binding.gorillaActionButton.setBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+
                     binding.gorillaActionButton.setOnClickListener {
                         handleCosmeticAction(monkey)
                     }
@@ -97,6 +106,10 @@ class CosmeticFragment : Fragment() {
                         "Buy (${monkey.cost} Bananas)"
                     }
                     binding.orangutanActionButton.isEnabled = !monkey.isEquipped
+
+                    val colorRes = if (monkey.isEquipped) R.color.teal_200 else R.color.button_default
+                    binding.orangutanActionButton.setBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+
                     binding.orangutanActionButton.setOnClickListener {
                         handleCosmeticAction(monkey)
                     }
@@ -111,6 +124,10 @@ class CosmeticFragment : Fragment() {
                         "Buy (${monkey.cost} Bananas)"
                     }
                     binding.macaqueActionButton.isEnabled = !monkey.isEquipped
+
+                    val colorRes = if (monkey.isEquipped) R.color.teal_200 else R.color.button_default
+                    binding.macaqueActionButton.setBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+
                     binding.macaqueActionButton.setOnClickListener {
                         handleCosmeticAction(monkey)
                     }
