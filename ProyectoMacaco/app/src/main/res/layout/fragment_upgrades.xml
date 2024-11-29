@@ -27,6 +27,12 @@
         android:text="Bananas: 0"
         android:textStyle="bold"
         android:textColor="@color/white"
+
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1.5"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -41,7 +47,12 @@
         android:paddingBottom="8dp"
         android:text="Efficiency Improvement: Makes the bar easier to fill"
         android:textColor="@color/yellow"
-        android:background="@color/black"
+
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1.5"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +80,12 @@
         android:paddingBottom="8dp"
         android:text="Passive Improvement: The monkey moves on its own periodically"
         android:textColor="@color/yellow"
-        android:background="@color/black"
+
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1.5"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -96,7 +112,12 @@
         android:paddingBottom="8dp"
         android:text="AFK Improvement: Automatically generates bananas while away"
         android:textColor="@color/yellow"
-        android:background="@color/black"
+
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1.5"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
