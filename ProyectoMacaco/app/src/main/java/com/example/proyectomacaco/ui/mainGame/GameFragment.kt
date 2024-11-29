@@ -110,9 +110,10 @@ class GameFragment : Fragment() {
         gameViewModel.experience.observe(viewLifecycleOwner) {
             val rankIndex = gameViewModel.getRankIndex()
             val backgroundRes = when {
-                rankIndex <= 5 -> R.drawable.background_jungle
-                rankIndex in 6..8 -> R.drawable.background_island
-                rankIndex == 9 -> R.drawable.background_space
+                rankIndex <= 4 -> R.drawable.background_jungle
+                rankIndex in 5..6 -> R.drawable.background_island
+                rankIndex in 7..8 -> R.drawable.background_space
+                rankIndex == 9 -> R.drawable.background_heaven
                 else -> R.drawable.background_jungle
             }
             binding.background.setImageResource(backgroundRes)
@@ -223,6 +224,7 @@ class GameFragment : Fragment() {
             "gorilla" -> R.drawable.gorilla_left
             "orangutan" -> R.drawable.orangutan_left
             "macaque" -> R.drawable.macaque_left
+            "albino" -> R.drawable.albino_left
             else -> R.drawable.monkey_left
         }
 
@@ -231,6 +233,7 @@ class GameFragment : Fragment() {
             "gorilla" -> R.drawable.gorilla_right
             "orangutan" -> R.drawable.orangutan_right
             "macaque" -> R.drawable.macaque_right
+            "albino" -> R.drawable.albino_right
             else -> R.drawable.monkey_right
         }
 

@@ -132,6 +132,24 @@ class CosmeticFragment : Fragment() {
                         handleCosmeticAction(monkey)
                     }
                 }
+                "albino" -> {
+                    binding.albinoImage.setImageResource(R.drawable.albino_left)
+                    binding.albinoName.text = monkey.name
+                    binding.albinoCost.text = "The Miracle of the Genes"
+                    binding.albinoActionButton.text = if (monkey.isPurchased) {
+                        if (monkey.isEquipped) "Equipped" else "Equip"
+                    } else {
+                        "Buy (${monkey.cost} Bananas)"
+                    }
+                    binding.albinoActionButton.isEnabled = !monkey.isEquipped
+
+                    val colorRes = if (monkey.isEquipped) R.color.teal_200 else R.color.button_default
+                    binding.albinoActionButton.setBackgroundColor(ContextCompat.getColor(requireContext(), colorRes))
+
+                    binding.albinoActionButton.setOnClickListener {
+                        handleCosmeticAction(monkey)
+                    }
+                }
             }
         }
     }

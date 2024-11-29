@@ -47,7 +47,7 @@ class GameViewModel : ViewModel() {
         "Banana Hoarder",
         "Primate Warrior",
         "Chimp Commander",
-        "Ape Overlord",
+        "Space Monkey",
         "King of the Jungle",
         "Monkey Legend"
     )
@@ -242,7 +242,8 @@ class GameViewModel : ViewModel() {
             Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
             Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
             Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600),
-            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800)
+            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800),
+            Monkey("albino", "Albino Gorilla", R.drawable.albino_left, 3000)
         )
     }
     val cosmetics: LiveData<List<Monkey>> get() = _cosmetics
@@ -310,8 +311,9 @@ class GameViewModel : ViewModel() {
             Monkey("chimp", "Chimpanzee", R.drawable.monkey_left, 0, isPurchased = true, isEquipped = true),
             Monkey("gorilla", "Gorilla", R.drawable.gorilla_left, 200),
             Monkey("orangutan", "Orangutan", R.drawable.orangutan_left, 600),
-            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800)
-            )
+            Monkey("macaque", "Macaque", R.drawable.macaque_left, 800),
+            Monkey("albino", "Albino Gorilla", R.drawable.albino_left, 3000)
+        )
         _cosmetics.value = defaultCosmetics
     }
 }

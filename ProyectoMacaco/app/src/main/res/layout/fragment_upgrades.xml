@@ -41,68 +41,57 @@
         app:layout_constraintVertical_bias="0.129" />
 
     <TextView
-        android:id="@+id/improvement_efficiency_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="Efficiency Improvement: Makes the bar easier to fill"
-        android:textColor="@color/yellow"
-
-        android:shadowColor="#000000"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="1.5"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.248" />
-
-    <Button
-        android:id="@+id/buy_efficiency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Buy Efficiency Improvement"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/improvement_efficiency_description"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/improvement_passive_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:text="Passive Improvement: The monkey moves on its own periodically"
-        android:textColor="@color/yellow"
-
         android:shadowColor="#000000"
         android:shadowDx="1"
+
         android:shadowDy="1"
         android:shadowRadius="1.5"
+        android:text="Passive Improvement: The monkey moves on its own periodically"
+        android:textColor="@color/yellow"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.437" />
+        app:layout_constraintVertical_bias="0.431" />
+
+    <TextView
+        android:id="@+id/improvement_efficiency_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+
+        android:shadowDy="1"
+        android:shadowRadius="1.5"
+        android:text="Efficiency Improvement: Makes the bar easier to fill"
+        android:textColor="@color/yellow"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.241" />
 
     <Button
-        android:id="@+id/buy_passive"
+        android:id="@+id/buy_efficiency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Buy Passive Improvement"
+        android:layout_marginTop="8dp"
+        android:text="Buy Efficiency Improvement"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/improvement_passive_description" />
+        app:layout_constraintTop_toBottomOf="@+id/improvement_efficiency_description"
+        app:layout_constraintVertical_bias="0.002" />
 
     <TextView
         android:id="@+id/improvement_afk_description"
@@ -110,33 +99,46 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:text="AFK Improvement: Automatically generates bananas while away"
-        android:textColor="@color/yellow"
-
         android:shadowColor="#000000"
         android:shadowDx="1"
+
         android:shadowDy="1"
         android:shadowRadius="1.5"
+        android:text="AFK Improvement: Automatically generates bananas while away"
+        android:textColor="@color/yellow"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.656" />
+        app:layout_constraintVertical_bias="0.649" />
 
     <Button
         android:id="@+id/buy_afk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="Buy AFK Improvement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/improvement_afk_description"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.01" />
+
+    <Button
+        android:id="@+id/buy_passive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Buy Passive Improvement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/improvement_passive_description"
+        app:layout_constraintVertical_bias="0.002" />
 
     <ImageView
         android:id="@+id/bananaGif"

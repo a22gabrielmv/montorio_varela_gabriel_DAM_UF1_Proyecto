@@ -56,12 +56,13 @@
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
                 android:paddingTop="10dp"
+                android:layout_marginBottom="20dp"
                 >
 
                 <ImageView
                     android:id="@+id/chimpImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:src="@drawable/monkey_left" />
 
                 <TextView
@@ -104,12 +105,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
+                android:layout_marginBottom="20dp"
                 >
 
                 <ImageView
                     android:id="@+id/gorillaImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:src="@drawable/gorilla_left" />
 
                 <TextView
@@ -151,12 +153,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginBottom="20dp"
                 >
 
                 <ImageView
                     android:id="@+id/orangutanImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:src="@drawable/orangutan_left" />
 
                 <TextView
@@ -198,12 +201,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginBottom="20dp"
                 >
 
                 <ImageView
                     android:id="@+id/macaqueImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:src="@drawable/macaque_left" />
 
                 <TextView
@@ -234,6 +238,55 @@
 
                 <Button
                     android:id="@+id/macaqueActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Equip" />
+            </LinearLayout>
+
+            <!-- Albino Gorilla -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:layout_marginBottom="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/albinoImage"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/albino_left" />
+
+                <TextView
+                    android:id="@+id/albinoName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/yellow"
+
+                    android:shadowColor="#000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1.5"
+
+                    android:text="Albino Gorilla" />
+
+                <TextView
+                    android:id="@+id/albinoCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"
+                    android:text="The Miracle of the Genes"
+
+                    android:background="@color/black"
+                    android:textColor="@color/teal_200"
+                    />
+
+                <Button
+                    android:id="@+id/albinoActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

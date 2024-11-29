@@ -1,6 +1,8 @@
 # Referencias
 
+https://developer.android.com/training/data-storage/shared-preferences?hl=es-419
 
+https://developer.android.com/guide/topics/ui/notifiers/toasts?hl=es-419
 
 ## Índice
 
