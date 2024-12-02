@@ -3,6 +3,7 @@ package com.example.proyectomacaco.ui.upgradeStore
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class UpgradesFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private var toast: Toast? = null
+    private var isToastVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,8 +106,10 @@ class UpgradesFragment : Fragment() {
         toast = Toast(requireContext()).apply {
             duration = Toast.LENGTH_SHORT
             view = layout
-            show()
+            setGravity(Gravity.CENTER_HORIZONTAL or Gravity.TOP, 0, 1885)
         }
+
+        toast?.show()
     }
 
     override fun onPause() {

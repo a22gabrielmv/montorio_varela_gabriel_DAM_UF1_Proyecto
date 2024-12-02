@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -126,7 +127,7 @@ class GameFragment : Fragment() {
             playMonkeySoundIfNotPlaying()
             gameViewModel.cosmetics.value?.find { it.isEquipped }
                 ?.let { it1 -> toggleMonkeyImage(it1) }
-            if (Random.nextInt(200) < 1) {
+            if (Random.nextInt(400) < 1) {
                 isPlayingSound = true
                 showGifWithNewMusic()
             }
@@ -183,6 +184,9 @@ class GameFragment : Fragment() {
                 val toast = Toast(requireContext())
                 toast.duration = Toast.LENGTH_LONG
                 toast.view = layout
+
+                toast.setGravity(Gravity.CENTER_HORIZONTAL or Gravity.TOP, 0, 1885)
+
                 toast.show()
 
             }, 7500)
@@ -246,7 +250,7 @@ class GameFragment : Fragment() {
         isMonkeyFacingLeft = !isMonkeyFacingLeft
 
         val efficiencyLevel = gameViewModel.improvements.value?.get("efficiency") ?: 0
-        val baseIncrement = 20 + (efficiencyLevel * 5)
+        val baseIncrement = 20 + (efficiencyLevel * 7)
         progressValue += baseIncrement
 
         while (progressValue >= 105) {
@@ -418,7 +422,7 @@ class GameFragment : Fragment() {
             else -> 4000L
         }
 
-        val baseIncrement = 20 + (efficiencyLevel * 5)
+        val baseIncrement = 20 + (efficiencyLevel * 7)
         val passiveMovements = effectiveAfkMillis / interval
         val bananasGenerated = (passiveMovements * baseIncrement / 105).toInt()
 
@@ -435,6 +439,9 @@ class GameFragment : Fragment() {
             val toast = Toast(requireContext())
             toast.duration = Toast.LENGTH_LONG
             toast.view = layout
+
+            toast.setGravity(Gravity.CENTER_HORIZONTAL or Gravity.TOP, 0, 1885)
+
             toast.show()
 
             gameViewModel.setBananaCount(

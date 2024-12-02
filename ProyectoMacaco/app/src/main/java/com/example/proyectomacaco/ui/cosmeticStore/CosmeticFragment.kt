@@ -3,6 +3,7 @@ package com.example.proyectomacaco.ui.cosmeticStore
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -184,9 +185,12 @@ class CosmeticFragment : Fragment() {
         toast = Toast(requireContext()).apply {
             duration = Toast.LENGTH_SHORT
             view = layout
-            show()
+            setGravity(Gravity.CENTER_HORIZONTAL or Gravity.TOP, 0, 1885)
         }
+
+        toast?.show()
     }
+
 
     override fun onResume() {
         super.onResume()

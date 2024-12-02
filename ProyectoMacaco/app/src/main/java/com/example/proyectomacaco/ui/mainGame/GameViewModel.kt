@@ -162,7 +162,7 @@ class GameViewModel : ViewModel() {
             _bananaCount.value = currentBananas - cost
             _bananasSpent.value = (_bananasSpent.value ?: 0) + cost
             levels[type] = (levels[type] ?: 0) + 1
-            costs[type] = (cost * 2.5).toInt()
+            costs[type] = (cost * 2.0).toInt()
             improvementLevels.value = levels
             improvementCosts.value = costs
             true
