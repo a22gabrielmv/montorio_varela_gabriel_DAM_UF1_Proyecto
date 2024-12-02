@@ -127,7 +127,7 @@ class GameFragment : Fragment() {
             playMonkeySoundIfNotPlaying()
             gameViewModel.cosmetics.value?.find { it.isEquipped }
                 ?.let { it1 -> toggleMonkeyImage(it1) }
-            if (Random.nextInt(300) < 1) {
+            if (Random.nextInt(250) < 1) {
                 isPlayingSound = true
                 showGifWithNewMusic()
             }
@@ -250,7 +250,7 @@ class GameFragment : Fragment() {
         isMonkeyFacingLeft = !isMonkeyFacingLeft
 
         val efficiencyLevel = gameViewModel.improvements.value?.get("efficiency") ?: 0
-        val baseIncrement = 20 + (efficiencyLevel * 10)
+        val baseIncrement = 20 + (efficiencyLevel * 15)
         progressValue += baseIncrement
 
         while (progressValue >= 105) {
@@ -422,7 +422,7 @@ class GameFragment : Fragment() {
             else -> 4000L
         }
 
-        val baseIncrement = 20 + (efficiencyLevel * 10)
+        val baseIncrement = 20 + (efficiencyLevel * 15)
         val passiveMovements = effectiveAfkMillis / interval
         val bananasGenerated = (passiveMovements * baseIncrement / 105).toInt()
 
